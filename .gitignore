@@ -1,0 +1,33 @@
+# Node.js
+node_modules/
+package-lock.json
+.env
+
+# TypeScript
+*.tsbuildinfo
+dist/
+build/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+
+# Optional npm cache directory
+.npm
+
+# Mac OS file
+.DS_Store
