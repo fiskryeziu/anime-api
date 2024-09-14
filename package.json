@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "hianime-api is a Node.js-based API that scrapes data from hianime.to",
   "main": "dist/index.js",
-  "type" : "module",
- "scripts": {
-    "dev": "node --loader=ts-node/esm --env-file=.env --watch src/index.ts",
+  "scripts": {
+  "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
@@ -21,7 +20,9 @@
   "homepage": "https://github.com/fiskryeziu/hianime-api#readme",
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/node": "^22.5.4",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2"
   },
   "dependencies": {
