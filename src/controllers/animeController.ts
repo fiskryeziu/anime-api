@@ -5,7 +5,7 @@ const getAll = async (req: Request, res: Response) => {
     try {
         const animeData = await scrapeAnime()
 
-        res.status(200).json({ message: 'there you have your data' })
+        res.status(200).json(animeData)
     } catch (error) {
         let message
         if (error instanceof Error) {
