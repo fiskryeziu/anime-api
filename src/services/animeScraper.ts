@@ -1,6 +1,11 @@
 import * as cheerio from 'cheerio';
+const URL = 'https://hianime.to'
 
 const scrapeAnime = async () => {
+    //TODO: for the schedule use the url/ajax?etc.... 
+    //     to get the selected date
+    //     '/ajax/schedule/list?tzOffset=' + tzOffset + '&date=' + $(this).data('date')
+    //             var tzOffset = new Date().getTimezoneOffset();
     try {
         const $ = await cheerio.fromURL('https://hianime.to/home');
 
@@ -50,8 +55,8 @@ const scrapeAnime = async () => {
                     selector: '.film_list-wrap:first .flw-item',
                     value: (el) => {
                         const img = $(el).find('img').attr('data-src')
-                        const latestEpisodeUrl = 'https://hianime.to' + $(el).find('a').attr('href')
-                        const animeUrl = 'https://hianime.to' + $(el).find('.film-name a').attr('href')
+                        const latestEpisodeUrl = URL + $(el).find('a').attr('href')
+                        const animeUrl = URL + $(el).find('.film-name a').attr('href')
                         const url = { latestEpisodeUrl, animeUrl }
 
                         const name = $(el).find('.film-name').text()
@@ -72,8 +77,8 @@ const scrapeAnime = async () => {
                     selector: '.film_list-wrap:eq(1) .flw-item',
                     value: (el) => {
                         const img = $(el).find('img').attr('data-src')
-                        const latestEpisodeUrl = 'https://hianime.to' + $(el).find('a').attr('href')
-                        const animeUrl = 'https://hianime.to' + $(el).find('.film-name a').attr('href')
+                        const latestEpisodeUrl = URL + $(el).find('a').attr('href')
+                        const animeUrl = URL + $(el).find('.film-name a').attr('href')
                         const url = { latestEpisodeUrl, animeUrl }
 
                         const name = $(el).find('.film-name').text()
@@ -94,8 +99,8 @@ const scrapeAnime = async () => {
                     selector: '.film_list-wrap:eq(2) .flw-item',
                     value: (el) => {
                         const img = $(el).find('img').attr('data-src')
-                        const latestEpisodeUrl = 'https://hianime.to' + $(el).find('a').attr('href')
-                        const animeUrl = 'https://hianime.to' + $(el).find('.film-name a').attr('href')
+                        const latestEpisodeUrl = URL + $(el).find('a').attr('href')
+                        const animeUrl = URL + $(el).find('.film-name a').attr('href')
                         const url = { latestEpisodeUrl, animeUrl }
 
                         const name = $(el).find('.film-name').text()
@@ -107,6 +112,71 @@ const scrapeAnime = async () => {
                     },
                 }
             ],
+            rankToday: [{
+                selector: '.tab-content #top-viewed-day .ulclear li',
+                value: (el) => {
+                    const img = $(el).find('.film-poster img').attr('data-src')
+                    const name = $(el).find('.film-name a').text()
+                    const url = URL + $(el).find('.film-name a').attr('href')
+                    const captions = $(el).find('.tick-sub').text()
+                    const dub = $(el).find('.tick-dub').text()
+                    const episodes = $(el).find('.tick-eps').text()
+
+                    const details = { captions, dub, episodes, url }
+
+
+                    return { img, name, details }
+                },
+            }],
+            rankWeek: [{
+                selector: '.tab-content #top-viewed-week .ulclear li',
+                value: (el) => {
+                    const img = $(el).find('.film-poster img').attr('data-src')
+                    const name = $(el).find('.film-name a').text()
+                    const url = URL + $(el).find('.film-name a').attr('href')
+                    const captions = $(el).find('.tick-sub').text()
+                    const dub = $(el).find('.tick-dub').text()
+                    const episodes = $(el).find('.tick-eps').text()
+
+                    const details = { captions, dub, episodes, url }
+
+
+                    return { img, name, details }
+                },
+            }],
+            rankMonth: [{
+                selector: '.tab-content #top-viewed-month .ulclear li',
+                value: (el) => {
+                    const img = $(el).find('.film-poster img').attr('data-src')
+                    const name = $(el).find('.film-name a').text()
+                    const url = URL + $(el).find('.film-name a').attr('href')
+                    const captions = $(el).find('.tick-sub').text()
+                    const dub = $(el).find('.tick-dub').text()
+                    const episodes = $(el).find('.tick-eps').text()
+
+                    const details = { captions, dub, episodes, url }
+
+
+                    return { img, name, details }
+                },
+            }],
+            trendingPosts: [
+                {
+                    selector: '.connecting-list .item',
+                    value: (el) => {
+                        const tag = $(el).find('.gi-top .ztag span:eq(0)').text()
+                        const postedTime = $(el).find('.gi-top .ztag span:eq(1)').text()
+                        const comments = $(el).find('.gi-stats').text().trim()
+                        const postTitle = $(el).find('.item-name a').text()
+                        const subject = $(el).find('.subject').text().replace(/\s+/g, ' ').trim();
+                        const avatar = $(el).find('.profile-avatar img').attr('src')
+                        const username = $(el).find('.profile-avatar img').attr('alt')
+                        const badge = $(el).find('.user-name span').text()
+
+                        return { tag, postedTime, comments, postTitle, subject, avatar, username, badge }
+                    }
+                }
+            ]
             // schedule: [
             //     {
             //         selector: '',
