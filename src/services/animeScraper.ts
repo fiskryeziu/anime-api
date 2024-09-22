@@ -2,10 +2,10 @@ import * as cheerio from 'cheerio';
 const URL = 'https://hianime.to'
 
 const scrapeAnime = async () => {
-    //TODO: for the schedule use the url/ajax?etc.... 
-    //     to get the selected date
-    //     '/ajax/schedule/list?tzOffset=' + tzOffset + '&date=' + $(this).data('date')
-    //             var tzOffset = new Date().getTimezoneOffset();
+    // TODO: this will get called on the client side
+    // const offset = new Date().getTimezoneOffset()
+    // const date = $(el).data('date')
+    // const data = await fetch(`${URL}/ajax/schedule/list?tzOffset=${offset}&date=${date}`)
     try {
         const $ = await cheerio.fromURL('https://hianime.to/home');
 
@@ -177,16 +177,7 @@ const scrapeAnime = async () => {
                     }
                 }
             ]
-            // schedule: [
-            //     {
-            //         selector: '',
-            //         value: () => { }
-            //     }
-            // ]
-
         })
-
-
         return { data }
     } catch (error) {
         let message
