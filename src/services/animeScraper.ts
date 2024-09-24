@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-const URL = 'https://hianime.to'
+// const URL = 'https://hianime.to'
 
 const scrapeAnime = async () => {
     // TODO: this will get called on the client side
@@ -25,6 +25,8 @@ const scrapeAnime = async () => {
 
                         const captions = $(el).find('.sc-detail .tick-item').eq(0).text()
                         const dubEp = $(el).find('.sc-detail .tick-item').eq(1).text()
+                        const watchUrl = $(el).find('.desi-buttons a:eq(0)').attr('href')
+                        const detailsUrl = $(el).find('.desi-buttons a:eq(1)').attr('href')
 
 
                         const details = {
@@ -33,7 +35,9 @@ const scrapeAnime = async () => {
                             date: detailsData[2] || '',
                             quality: detailsData[3] || '',
                             captions: captions || '',
-                            dubEp: dubEp || ''
+                            dubEp: dubEp || '',
+                            watchUrl,
+                            detailsUrl
                         };
                         return { imgSrc: img, spotlightRanking: spotlightText, details }
                     }
@@ -45,8 +49,9 @@ const scrapeAnime = async () => {
                     value: (el) => {
                         const img = $(el).find('img').attr('data-src')
                         const trendingRank = $(el).find('.item .number span').text()
+                        const detailsUrl = $(el).find('a').attr('href')
 
-                        return { img, trendingRank }
+                        return { img, trendingRank, detailsUrl }
                     }
                 },
             ],
@@ -55,9 +60,9 @@ const scrapeAnime = async () => {
                     selector: '.film_list-wrap:first .flw-item',
                     value: (el) => {
                         const img = $(el).find('img').attr('data-src')
-                        const latestEpisodeUrl = URL + $(el).find('a').attr('href')
-                        const animeUrl = URL + $(el).find('.film-name a').attr('href')
-                        const url = { latestEpisodeUrl, animeUrl }
+                        const watchUrl = $(el).find('.film-poster a').attr('href')
+                        const detailsUrl = $(el).find('.film-name a').attr('href')
+                        const url = { watchUrl, detailsUrl }
 
                         const name = $(el).find('.film-name').text()
                         const type = $(el).find('.film-detail .fd-infor span:first').text()
@@ -65,7 +70,7 @@ const scrapeAnime = async () => {
                         const captions = $(el).find('.film-poster .tick-sub').text()
                         const dubEp = $(el).find('.film-poster .tick-dub').text()
                         const episodes = $(el).find('.film-poster .tick-eps').text()
-                        const details = { name, type, duration, captions, dubEp, episodes }
+                        const details = { name, type, duration, captions, dubEp, episodes, }
 
                         return { img, url, details }
                     },
@@ -77,16 +82,16 @@ const scrapeAnime = async () => {
                     selector: '.film_list-wrap:eq(1) .flw-item',
                     value: (el) => {
                         const img = $(el).find('img').attr('data-src')
-                        const latestEpisodeUrl = URL + $(el).find('a').attr('href')
-                        const animeUrl = URL + $(el).find('.film-name a').attr('href')
-                        const url = { latestEpisodeUrl, animeUrl }
+                        const watchUrl = $(el).find('.film-poster a').attr('href')
+                        const detailsUrl = $(el).find('.film-name a').attr('href')
+                        const url = { watchUrl, detailsUrl }
 
                         const name = $(el).find('.film-name').text()
                         const type = $(el).find('.film-detail .fd-infor span:first').text()
                         const duration = $(el).find('.fdi-duration').text()
                         const captions = $(el).find('.film-poster .tick-sub').text()
                         const episodes = $(el).find('.film-poster .tick-dub').text()
-                        const details = { name, type, duration, captions, episodes }
+                        const details = { name, type, duration, captions, episodes, }
 
                         return { img, url, details }
 
@@ -99,14 +104,14 @@ const scrapeAnime = async () => {
                     selector: '.film_list-wrap:eq(2) .flw-item',
                     value: (el) => {
                         const img = $(el).find('img').attr('data-src')
-                        const latestEpisodeUrl = URL + $(el).find('a').attr('href')
-                        const animeUrl = URL + $(el).find('.film-name a').attr('href')
-                        const url = { latestEpisodeUrl, animeUrl }
+                        const watchUrl = $(el).find('a').attr('href')
+                        const detailsUrl = $(el).find('.film-name a').attr('href')
+                        const url = { detailsUrl, watchUrl }
 
                         const name = $(el).find('.film-name').text()
                         const type = $(el).find('.film-detail .fd-infor span:first').text()
                         const startDate = $(el).find('.film-detail .fd-infor .fdi-duration').text()
-                        const details = { name, type, startDate, }
+                        const details = { name, type, startDate, detailsUrl }
 
                         return { img, url, details }
                     },
@@ -117,7 +122,7 @@ const scrapeAnime = async () => {
                 value: (el) => {
                     const img = $(el).find('.film-poster img').attr('data-src')
                     const name = $(el).find('.film-name a').text()
-                    const url = URL + $(el).find('.film-name a').attr('href')
+                    const url = $(el).find('.film-name a').attr('href')
                     const captions = $(el).find('.tick-sub').text()
                     const dub = $(el).find('.tick-dub').text()
                     const episodes = $(el).find('.tick-eps').text()
@@ -133,7 +138,7 @@ const scrapeAnime = async () => {
                 value: (el) => {
                     const img = $(el).find('.film-poster img').attr('data-src')
                     const name = $(el).find('.film-name a').text()
-                    const url = URL + $(el).find('.film-name a').attr('href')
+                    const url = $(el).find('.film-name a').attr('href')
                     const captions = $(el).find('.tick-sub').text()
                     const dub = $(el).find('.tick-dub').text()
                     const episodes = $(el).find('.tick-eps').text()
@@ -149,7 +154,7 @@ const scrapeAnime = async () => {
                 value: (el) => {
                     const img = $(el).find('.film-poster img').attr('data-src')
                     const name = $(el).find('.film-name a').text()
-                    const url = URL + $(el).find('.film-name a').attr('href')
+                    const url = $(el).find('.film-name a').attr('href')
                     const captions = $(el).find('.tick-sub').text()
                     const dub = $(el).find('.tick-dub').text()
                     const episodes = $(el).find('.tick-eps').text()

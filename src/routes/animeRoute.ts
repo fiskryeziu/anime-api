@@ -1,6 +1,7 @@
 import express from 'express'
 import {
     getAll,
+    getAnimeDetails,
     getByGenreAnime,
     getDubbedAnime,
     getLatestComplete,
@@ -28,6 +29,7 @@ route.route('/movies').get(getMoviesAnime)
 route.route('/special').get(getSpecialAnime)
 route.route('/ova').get(getOvaAnime)
 route.route('/genre/:genre').get(getByGenreAnime)
+route.route('/info/:details').get(getAnimeDetails)
 
 export default route
 
