@@ -31,3 +31,7 @@ Thumbs.db
 
 # Mac OS file
 .DS_Store
+
+
+#
+.prettierrc.json
