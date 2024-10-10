@@ -20,8 +20,10 @@ app.use("/api/anime", cacheMiddleware, animeRoute)
 app.use(notFound)
 app.use(errorHandler)
 
-app.listen(port, () => {
-  console.log(`Server is listening at port ${port}`)
-})
+const startServer = () => {
+  return app.listen(port, () => {
+    console.log(`Server is listening at port ${port}`)
+  })
+}
 
-export default app
+export { app, startServer }
