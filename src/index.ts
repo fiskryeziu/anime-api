@@ -23,3 +23,5 @@ app.use(errorHandler)
 app.listen(port, () => {
   console.log(`Server is listening at port ${port}`)
 })
+
+export default app
