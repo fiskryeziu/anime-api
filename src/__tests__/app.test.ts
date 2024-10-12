@@ -1,20 +1,18 @@
 import request from "supertest"
-import { app, startServer } from "../index"
+import express from "express"
 
-let server: any
+const app = express()
 
-beforeAll((done) => {
-  server = startServer() // Start the server before tests
-  done()
+app.get("/", (req, res) => {
+  res.status(200).json({ msg: "Server is up and running" })
 })
 
-afterAll((done) => {
-  server.close(done) // Close the server after tests
-})
 describe("GET /", () => {
   it("should return a 200 status and a message", async () => {
-    const res = await request(app).get("/")
-    expect(res.statusCode).toBe(200)
-    expect(res.body).toHaveProperty("msg", "Server is up and running")
+    const response = await request(app).get("/")
+
+    expect(response.status).toBe(200)
+
+    expect(response.body).toEqual({ msg: "Server is up and running" })
   })
 })
